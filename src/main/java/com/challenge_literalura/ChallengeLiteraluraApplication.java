@@ -26,7 +26,7 @@ public class ChallengeLiteraluraApplication implements CommandLineRunner {
 				1 - Busca libro por nombre
 				0 - Salir
 				""");
-			Integer optionSelected = sc.nextInt();
+			int optionSelected = sc.nextInt();
 			sc.nextLine();
 
 			if(optionSelected == 1){
