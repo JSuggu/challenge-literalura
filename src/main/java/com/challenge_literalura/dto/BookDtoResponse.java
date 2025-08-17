@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BookDtoResponse {
+    private Long id;
     private String title;
     private List<AuthorDto> authors;
     private List<String> languages;
@@ -27,6 +28,14 @@ public class BookDtoResponse {
         return (languages == null || languages.isEmpty())
                 ? "Idioma desconocido"
                 : languages.get(0);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

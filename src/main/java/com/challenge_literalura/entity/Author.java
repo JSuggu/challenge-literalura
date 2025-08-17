@@ -20,6 +20,10 @@ public class Author {
 
     private String name;
 
+    private Integer birthYear;
+
+    private Integer deathYear;
+
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Book> books = new ArrayList<>();
 
@@ -29,5 +33,37 @@ public class Author {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getBirthYear() {
+        return birthYear;
+    }
+
+    public void setBirthYear(Integer birthYear) {
+        this.birthYear = birthYear;
+    }
+
+    public Integer getDeathYear() {
+        return deathYear;
+    }
+
+    public void setDeathYear(Integer deathYear) {
+        this.deathYear = deathYear;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }
