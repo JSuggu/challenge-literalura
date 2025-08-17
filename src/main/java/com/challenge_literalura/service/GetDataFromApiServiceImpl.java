@@ -1,6 +1,7 @@
 package com.challenge_literalura.service;
 
 import com.challenge_literalura.dto.ApiDtoResponse;
+import com.challenge_literalura.dto.AuthorDto;
 import com.challenge_literalura.dto.BookDtoResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,23 @@ public class GetDataFromApiServiceImpl implements GetDataFromApiService {
 
         ApiDtoResponse mappedResponse = mapper.readValue(response.body(), ApiDtoResponse.class);
 
+        if (mappedResponse.getResults() != null) {
+            for (BookDtoResponse book : mappedResponse.getResults()) {
+                if (book.getAuthors() != null && !book.getAuthors().isEmpty()) {
+                    for (AuthorDto authorDto : book.getAuthors()) {
+                        if (!authorService.existAuthor(authorDto.getName())) {
+                            authorService.saveAuthor(authorDto);
+                        }
+                    }
+                }
+            }
+        }
+
+
         return mappedResponse.getResults();
+    }
+
+    private void saveAuthor(AuthorDto author){
+        authorService.saveAuthor(author);
     }
 }

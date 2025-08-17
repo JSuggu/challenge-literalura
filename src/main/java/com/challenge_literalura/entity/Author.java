@@ -24,7 +24,7 @@ public class Author {
 
     private Integer deathYear;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
     private List<Book> books = new ArrayList<>();
 
     public String getName() {

@@ -1,6 +1,8 @@
 package com.challenge_literalura;
 
+import com.challenge_literalura.dto.AuthorDto;
 import com.challenge_literalura.dto.BookDtoResponse;
+import com.challenge_literalura.service.AuthorService;
 import com.challenge_literalura.service.GetDataFromApiService;
 import com.challenge_literalura.service.GetDataFromApiServiceImpl;
 import org.springframework.boot.CommandLineRunner;
@@ -19,7 +21,7 @@ public class ChallengeLiteraluraApplication {
 	}
 
 	@Bean
-	public CommandLineRunner app(GetDataFromApiService getDataFromApiService) throws Exception {
+	public CommandLineRunner app(GetDataFromApiService getDataFromApiService, AuthorService authorService) throws Exception {
 		Scanner sc = new Scanner(System.in);
 		boolean active = true;
 
@@ -27,6 +29,7 @@ public class ChallengeLiteraluraApplication {
 			System.out.println("""
 				Elija la opcion a traves de su numero:
 				1 - Busca libro por nombre
+				2 - Listar autores
 				0 - Salir
 				""");
 			int optionSelected = sc.nextInt();
@@ -39,16 +42,25 @@ public class ChallengeLiteraluraApplication {
 				try {
 					List<BookDtoResponse> response = getDataFromApiService.getBooksByName(bookName);
 
-					for (BookDtoResponse book : response) {
+					response.stream().forEach(book -> {
 						System.out.println("Título: " + book.getTitle());
 						System.out.println("Autores: " + book.getAuthorsAsString());
 						System.out.println("Idioma: " + book.getFirstLanguage());
 						System.out.println("Descargas: " + book.getDownloadCount());
 						System.out.println("----------------------");
-					}
+					});
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			} else if (optionSelected == 2) {
+				System.out.println("Lista de autores");
+				List<AuthorDto> response = authorService.getAll();
+				response.stream().forEach(author -> {
+					System.out.println("Nombre: " + author.getName());
+					System.out.println("Año de Nacimiento: " + author.getBirthYear());
+					System.out.println("Año de Fallecimiento: " + author.getDeathYear());
+					System.out.println("----------------------");
+				});
 			} else if(optionSelected == 0){
 				sc.close();
 				active = false;
