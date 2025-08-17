@@ -2,17 +2,17 @@ package com.challenge_literalura.dto;
 
 import java.util.List;
 
-public class ApiDtoResponse {
-    private List<BookDtoResponse> results;
+public class ApiDto {
+    private List<BookDto> results;
     private int count;
     private String next;
     private String previous;
 
-    public List<BookDtoResponse> getResults() {
+    public List<BookDto> getResults() {
         return results;
     }
 
-    public void setResults(List<BookDtoResponse> results) {
+    public void setResults(List<BookDto> results) {
         this.results = results;
     }
 

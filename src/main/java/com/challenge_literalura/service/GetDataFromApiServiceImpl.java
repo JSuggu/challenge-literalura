@@ -1,8 +1,10 @@
 package com.challenge_literalura.service;
 
-import com.challenge_literalura.dto.ApiDtoResponse;
+import com.challenge_literalura.dto.ApiDto;
 import com.challenge_literalura.dto.AuthorDto;
-import com.challenge_literalura.dto.BookDtoResponse;
+import com.challenge_literalura.dto.BookDto;
+import com.challenge_literalura.entity.Author;
+import com.challenge_literalura.entity.Book;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +30,7 @@ public class GetDataFromApiServiceImpl implements GetDataFromApiService {
     }
 
     @Override
-    public List<BookDtoResponse> getBooksByName(String bookName) throws IOException, InterruptedException {
+    public List<BookDto> getBooksByName(String bookName) throws IOException, InterruptedException {
         bookName = bookName.replaceAll(" ", "%20");
         HttpRequest req = HttpRequest.newBuilder()
                 .header("content-type", "application/json")
@@ -38,14 +40,16 @@ public class GetDataFromApiServiceImpl implements GetDataFromApiService {
 
         HttpResponse<String> response = http.send(req, BodyHandlers.ofString());
 
-        ApiDtoResponse mappedResponse = mapper.readValue(response.body(), ApiDtoResponse.class);
+        ApiDto mappedResponse = mapper.readValue(response.body(), ApiDto.class);
 
         if (mappedResponse.getResults() != null) {
-            for (BookDtoResponse book : mappedResponse.getResults()) {
-                if (book.getAuthors() != null && !book.getAuthors().isEmpty()) {
-                    for (AuthorDto authorDto : book.getAuthors()) {
-                        if (!authorService.existAuthor(authorDto.getName())) {
-                            authorService.saveAuthor(authorDto);
+            for (BookDto bookDto : mappedResponse.getResults()) {
+                if (bookDto.getAuthors() != null && !bookDto.getAuthors().isEmpty()) {
+                    for (AuthorDto authorDto : bookDto.getAuthors()) {
+                        Author author = authorService.saveAuthor(authorDto);
+
+                        if (!bookService.existBook(bookDto.getTitle())) {
+                            bookService.saveBook(bookDto, author);
                         }
                     }
                 }
@@ -54,9 +58,5 @@ public class GetDataFromApiServiceImpl implements GetDataFromApiService {
 
 
         return mappedResponse.getResults();
-    }
-
-    private void saveAuthor(AuthorDto author){
-        authorService.saveAuthor(author);
     }
 }

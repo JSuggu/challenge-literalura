@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BookDtoResponse {
+public class BookDto {
     private Long id;
     private String title;
     private List<AuthorDto> authors;

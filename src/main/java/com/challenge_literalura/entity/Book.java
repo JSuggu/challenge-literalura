@@ -1,5 +1,6 @@
 package com.challenge_literalura.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 1000)
     private String title;
 
     @ManyToOne()
@@ -34,11 +36,11 @@ public class Book {
         this.title = title;
     }
 
-    public Author getAuthorId() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthorId(Author author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
