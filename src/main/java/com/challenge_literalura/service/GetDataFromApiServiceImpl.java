@@ -18,6 +18,13 @@ public class GetDataFromApiServiceImpl implements GetDataFromApiService {
     private final String apiUrl = "http://gutendex.com";
     private final HttpClient http = HttpClient.newHttpClient();
     private final ObjectMapper mapper = new ObjectMapper();
+    private final AuthorService authorService;
+    private final BookService bookService;
+
+    public GetDataFromApiServiceImpl(AuthorService authorService, BookService bookService){
+        this.authorService = authorService;
+        this.bookService = bookService;
+    }
 
     @Override
     public List<BookDtoResponse> getBooksByName(String bookName) throws IOException, InterruptedException {

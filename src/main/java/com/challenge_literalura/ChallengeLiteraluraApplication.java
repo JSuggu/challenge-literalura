@@ -1,24 +1,25 @@
 package com.challenge_literalura;
 
 import com.challenge_literalura.dto.BookDtoResponse;
+import com.challenge_literalura.service.GetDataFromApiService;
 import com.challenge_literalura.service.GetDataFromApiServiceImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 import java.util.Scanner;
 
 @SpringBootApplication
-public class ChallengeLiteraluraApplication implements CommandLineRunner {
+public class ChallengeLiteraluraApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChallengeLiteraluraApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		GetDataFromApiServiceImpl getData = new GetDataFromApiServiceImpl();
+	@Bean
+	public CommandLineRunner app(GetDataFromApiService getDataFromApiService) throws Exception {
 		Scanner sc = new Scanner(System.in);
 		boolean active = true;
 
@@ -36,7 +37,7 @@ public class ChallengeLiteraluraApplication implements CommandLineRunner {
 				String bookName = sc.nextLine();
 
 				try {
-					List<BookDtoResponse> response = getData.getBooksByName(bookName);
+					List<BookDtoResponse> response = getDataFromApiService.getBooksByName(bookName);
 
 					for (BookDtoResponse book : response) {
 						System.out.println("Título: " + book.getTitle());
@@ -54,5 +55,6 @@ public class ChallengeLiteraluraApplication implements CommandLineRunner {
 			}
 		}
 
-	}
+        return null;
+    }
 }

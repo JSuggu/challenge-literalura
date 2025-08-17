@@ -21,7 +21,7 @@ public class Book {
 
     @ManyToOne()
     @JoinColumn(name = "autor_id")
-    private Author authorId;
+    private Author author;
 
     private List<String> languages;
     private int downloadCount;
@@ -35,11 +35,11 @@ public class Book {
     }
 
     public Author getAuthorId() {
-        return authorId;
+        return author;
     }
 
-    public void setAuthorId(Author authorId) {
-        this.authorId = authorId;
+    public void setAuthorId(Author author) {
+        this.author = author;
     }
 
     public List<String> getLanguages() {
