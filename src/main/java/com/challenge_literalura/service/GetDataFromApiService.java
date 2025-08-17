@@ -5,6 +5,6 @@ import com.challenge_literalura.dto.BookDtoResponse;
 import java.io.IOException;
 import java.util.List;
 
-public interface IGetDataFromApiService {
+public interface GetDataFromApiService {
     List<BookDtoResponse> getBooksByName(String bookName) throws IOException, InterruptedException;
 }

@@ -1,10 +1,7 @@
 package com.challenge_literalura.service;
 
 import com.challenge_literalura.dto.ApiDtoResponse;
-import com.challenge_literalura.dto.AuthorDto;
 import com.challenge_literalura.dto.BookDtoResponse;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +11,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GetDataFromApiServiceImpl implements IGetDataFromApiService {
+public class GetDataFromApiServiceImpl implements GetDataFromApiService {
     private final String apiUrl = "http://gutendex.com";
     private final HttpClient http = HttpClient.newHttpClient();
     private final ObjectMapper mapper = new ObjectMapper();
