@@ -32,16 +32,24 @@ public class AuthorServiceImpl implements AuthorService{
 
     @Override
     public List<AuthorDto> getAll() {
-        List<Author> authors = authorRepository.findAll();
-        return authors.stream()
-                .map(author -> {
-                        AuthorDto authorDto = new AuthorDto();
-                        authorDto.setName(author.getName());
-                        authorDto.setBirthYear(author.getBirthYear());
-                        authorDto.setDeathYear(author.getDeathYear());
-                        return authorDto;
-                    }
-                )
+        return authorRepository.findAll().stream()
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AuthorDto> getAliveAuthorsByYear(Integer year) {
+        return authorRepository.findAliveAuthorsByYear(year).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    private AuthorDto convertToDto(Author author) {
+        AuthorDto authorDto = new AuthorDto();
+        authorDto.setName(author.getName());
+        authorDto.setBirthYear(author.getBirthYear());
+        authorDto.setDeathYear(author.getDeathYear());
+
+        return authorDto;
     }
 }

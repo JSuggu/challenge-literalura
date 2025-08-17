@@ -35,19 +35,30 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public List<BookDto> getAll() {
-        List<Book> books = bookRepository.findAll();
-        return books.stream()
-                .map(book -> {
-                    AuthorDto authorDto = new AuthorDto();
-                    authorDto.setName(book.getAuthor().getName());
-                    BookDto bookDto = new BookDto();
-                    bookDto.setTitle(book.getTitle());
-                    bookDto.setLanguages(book.getLanguages());
-                    bookDto.setAuthors(List.of(authorDto));
-                    bookDto.setDownloadCount(book.getDownloadCount());
-                    return bookDto;
-                })
+        return bookRepository.findAll().stream()
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookDto> getBooksByLanguage(String language) {
+        return bookRepository.findByLanguageIgnoreCase(language).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    private BookDto convertToDto(Book book) {
+        BookDto bookDto = new BookDto();
+        bookDto.setTitle(book.getTitle());
+        bookDto.setLanguages(book.getLanguages());
+        bookDto.setDownloadCount(book.getDownloadCount());
+
+        if (book.getAuthor() != null) {
+            AuthorDto authorDto = new AuthorDto();
+            bookDto.setAuthors(List.of(authorDto));
+        }
+
+        return bookDto;
     }
 
 }

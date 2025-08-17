@@ -25,7 +25,9 @@ public class Book {
     @JoinColumn(name = "autor_id")
     private Author author;
 
+    @Column(columnDefinition = "text[]")
     private List<String> languages;
+
     private int downloadCount;
 
     public String getTitle() {

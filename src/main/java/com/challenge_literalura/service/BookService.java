@@ -10,4 +10,5 @@ public interface BookService {
     Book saveBook(BookDto bookDto, Author author);
     boolean existBook(String title);
     List<BookDto> getAll();
+    List<BookDto> getBooksByLanguage(String language);
 }

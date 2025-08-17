@@ -43,7 +43,6 @@ public class ChallengeLiteraluraApplication {
 					System.out.println("Escriba el nombre del libro");
 					String bookName = sc.nextLine();
 
-
 					List<BookDto> response = getDataFromApiService.getBooksByName(bookName);
 
 					response.stream().forEach(book -> {
@@ -54,8 +53,10 @@ public class ChallengeLiteraluraApplication {
 						System.out.println("----------------------");
 					});
 				} else if (optionSelected == 2) {
-					System.out.println("Lista de autores");
+					System.out.println("Lista de libros registrados");
+
 					List<BookDto> response = bookService.getAll();
+
 					response.forEach(book -> {
 						System.out.println("Título: " + book.getTitle());
 						System.out.println("Autores: " + book.getAuthorsAsString());
@@ -64,12 +65,42 @@ public class ChallengeLiteraluraApplication {
 						System.out.println("----------------------");
 					});
 				} else if (optionSelected == 3) {
-					System.out.println("Lista de autores");
+					System.out.println("Lista de autores registrados");
+
 					List<AuthorDto> response = authorService.getAll();
+
 					response.forEach(author -> {
 						System.out.println("Nombre: " + author.getName());
 						System.out.println("Año de Nacimiento: " + author.getBirthYear());
 						System.out.println("Año de Fallecimiento: " + author.getDeathYear());
+						System.out.println("----------------------");
+					});
+				} else if (optionSelected == 4) {
+					System.out.println("Escriba el año");
+					Integer year = sc.nextInt();
+					sc.nextLine();
+
+					List<AuthorDto> response = authorService.getAliveAuthorsByYear(year);
+
+					System.out.println("Lista de autores vivos por año");
+					response.forEach(author -> {
+						System.out.println("Nombre: " + author.getName());
+						System.out.println("Año de Nacimiento: " + author.getBirthYear());
+						System.out.println("Año de Fallecimiento: " + author.getDeathYear());
+						System.out.println("----------------------");
+					});
+				} else if (optionSelected == 5) {
+					System.out.println("Escriba el idioma");
+					String language = sc.nextLine();
+
+					List<BookDto> response = bookService.getBooksByLanguage(language);
+
+					System.out.println("Lista de libros por idioma");
+					response.forEach(book -> {
+						System.out.println("Título: " + book.getTitle());
+						System.out.println("Autores: " + book.getAuthorsAsString());
+						System.out.println("Idioma: " + book.getFirstLanguage());
+						System.out.println("Descargas: " + book.getDownloadCount());
 						System.out.println("----------------------");
 					});
 				} else if(optionSelected == 0){
